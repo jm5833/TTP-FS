@@ -9,7 +9,7 @@ from django.utils import timezone
 #database table to extend the user table in django
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    current_cash = models.IntegerField()
+    current_cash = models.IntegerField(default=5000)
 
 #code snippets make sure that Profile is automatically created/updated
 #when a User instance is created/updated
