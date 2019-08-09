@@ -5,11 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 #create a custom usercreationform that also accepts name and email
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    name = forms.CharField(required=True)
 
     class Meta:
         model = User
         fields = (
-            'first_name', 
+            'name', 
             'email',
             'username',
             'password1',
