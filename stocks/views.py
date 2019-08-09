@@ -8,8 +8,8 @@ def home(request):
 def login(request):
     return HttpResponse('<h1> login </h1>')
 
-def register(request):
-    return HttpResponse('<h1> register </h1>')
+#def register(request):
+#    return HttpResponse('<h1> register </h1>')
 
 def portfolio(request):
     return HttpResponse('<h1> portfolio </h1>')
