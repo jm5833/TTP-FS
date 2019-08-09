@@ -2,11 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    #return render
-    return HttpResponse('<h1> Home </h1>')
+    return render(request, 'stocks/home.html')
 
 def portfolio(request):
-    return HttpResponse('<h1> portfolio </h1>')
+    return render(request, 'stocks/portfolio.html')
 
 def transactions(request):
-    return HttpResponse('<h1> transactions </h1>')
+    return render(request, 'stocks/transactions.html')

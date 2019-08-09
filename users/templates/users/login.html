@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title> Login </title>
-</head>
-<body>
+{% extends 'stocks/base.html' %}
+{% block content %}
     <form method='POST'>
         {% csrf_token %}
-        {{ form }}
-        <legend> Log in </legend>
-        <button type='submit'> Login </button>
+        {{ form.as_p }}
+        <button type='submit'> Sign up </button>
     </form>
-</body>
-</html>
-
+{% endblock content %}
