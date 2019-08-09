@@ -9,7 +9,7 @@ def register(request):
         form = RegisterForm(request.POST)
         #check if submitted data is valid data
         if form.is_valid():
-            form.save(current_cash=5000)
+            form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             return redirect('stocks-home')
