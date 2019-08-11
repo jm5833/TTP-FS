@@ -17,3 +17,4 @@ def register(request):
         #use created registration form
         form = RegisterForm()
     return render(request, 'users/register.html', {'form': form, 'title': 'Register'})
+
