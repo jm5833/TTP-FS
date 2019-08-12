@@ -21,10 +21,10 @@ from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('stocks.urls')),
+    path('', stock_views.home, name='home'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('register/', user_views.register, name='register'),
-    path('portfolio/', include('stocks.urls')),
-    path('transactions/', include('stocks.urls')),
+    path('portfolio/', stock_views.portfolio, name='stocks-portfolio'),
+    path('transactions/', stock_views.transactions, name='stocks-transactions'),
 ]
