@@ -1,4 +1,14 @@
 {% extends 'stocks/base.html' %}
 {% block content %}
-    <h1> Portfolio </h1> 
+    <h1> Portfolio </h1>
+    <div>
+        <h3> Portfolio will be here </h3>
+    </div>
+    <div>
+        <form action="" method="post">
+            <input type="text" name="symbol" placeholder="Enter stock ticker"><br>
+            <input type="number" name="quantity" min="1"><br>
+            <input type="submit" value="Purchase Stocks">
+        </form>
+    </div> 
 {% endblock content %}
