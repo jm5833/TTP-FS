@@ -15,7 +15,7 @@ class PurchaseForm(forms.ModelForm):
         )
     def clean(self):
         cleaned_data = super(PurchaseForm, self).clean()
-        stock_ticker = cleaned_data.get('stock_ticker')
+        stock_ticker = cleaned_data.get('stock_ticker').upper()
         num_of_shares = cleaned_data.get('num_of_shares')
         print(stock_ticker)
         if not stock_ticker and not num_of_shares:

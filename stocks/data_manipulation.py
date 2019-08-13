@@ -4,7 +4,7 @@ from stocks.data import get_stock_data
 #function to add a transaction to the 
 #transactions database
 def save_transaction(request, form):
-    stock_ticker = form.cleaned_data['stock_ticker']
+    stock_ticker = form.cleaned_data['stock_ticker'].upper()
     #retrieve the data from the submitted form
     post = form.save(commit=False)
     post.user = request.user
@@ -15,7 +15,7 @@ def save_transaction(request, form):
 #function to add a stock to the portfolio table
 def update_portfolio(request, form):
     user = request.user
-    stock_ticker = form.cleaned_data['stock_ticker']
+    stock_ticker = form.cleaned_data['stock_ticker'].upper()
     num_of_shares = form.cleaned_data['num_of_shares']
     price = get_stock_data(stock_ticker).get('price')
     #retrieve the number of stocks owned by the user for s_ticker
@@ -48,7 +48,7 @@ def balance_check(request, form):
     p = Profile.objects.filter(user=user)
     cash = p[0].current_cash
     
-    stock_ticker = form.cleaned_data['stock_ticker']
+    stock_ticker = form.cleaned_data['stock_ticker'].upper()
     quantity = form.cleaned_data['num_of_shares']
     net_price = get_stock_data(stock_ticker).get('price') * quantity
     
@@ -60,6 +60,7 @@ def update_user_cash(user, bought, net_price):
     user_profile = p[0]
     if bought:
         user_profile.current_cash -= net_price
-    print(user_profile.current_cash)
+    else:
+        user_profile.current_cash += net_price
     user_profile.save()
      
