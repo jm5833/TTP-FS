@@ -73,4 +73,5 @@ def get_portfolio(user):
                         'shares' : user_stock.num_of_shares,
                         'worth' : user_stock.price_bought,
                         })
+    return retval
            

@@ -8,15 +8,15 @@
                     <tr>
                         <th> Stock Name</th>
                         <th> Number of Shares</th>
-                        <th> Net Worth </th>
+                        <th> Price per Stock </th>
                     </tr>
                     {% for stock in stocks %}
                     <tr>
-                        <td> {{ stock.symbol }} </td>
-                        <td> {{ stock.shares }} </td>
-                        <td> {{ stock.worth }} </td>
+                        <td>  {{ stock.symbol }} </td>
+                        <td>  {{ stock.shares }} </td>
+                        <td> ${{ stock.worth }} </td>
                     </tr>
-                    {% endfor %}
+                    {% endfor%}
                 </table>
             </div>
             <div class="col-md-4">
