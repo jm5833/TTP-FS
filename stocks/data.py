@@ -14,3 +14,11 @@ def get_stock_data(symbol):
     retdata = { 'price' : data[0].get('price'), 'time' : data[0].get('time')}
     return retdata
 
+#function to check if the given stock symbol is valid
+#returns true if it is valid, false otherwise
+def is_valid_symbol(symbol):
+    URL='https://api.iextrading.com/1.0/tops/last'
+    PARAMS={'symbols' : symbol}
+    r = requests.get(url=URL, params=PARAMS)
+    data = r.json()
+    return len(data) > 0
