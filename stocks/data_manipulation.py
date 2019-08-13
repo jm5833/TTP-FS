@@ -1,6 +1,5 @@
-import stocks.stock_data
 from stocks.models import Portfolio, Transactions
-from stocks.stock_data import get_stock_data
+from stocks.data import get_stock_data
 
 #function to add a transaction to the 
 #transactions database
