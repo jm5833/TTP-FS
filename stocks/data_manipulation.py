@@ -1,4 +1,4 @@
-from stocks.models import Portfolio, Transactions
+from stocks.models import Portfolio, Transactions, Profile
 from stocks.data import get_stock_data
 
 #function to add a transaction to the 
@@ -28,6 +28,7 @@ def update_portfolio(request, form):
         p = user_stock[0]
         p.num_of_shares += num_of_shares
         p.save()
+    update_user_cash(user, True, num_of_shares * price)
             
 #function to add an entry into the portfolio table
 def add_portfolio(user, stock_ticker, num_of_shares, price):
@@ -38,3 +39,27 @@ def add_portfolio(user, stock_ticker, num_of_shares, price):
                     price_bought=price,
                     )
     p.save()
+
+#function to check if the user has enough money to purchase stock
+#returns True if the user has enough cash
+#returns False if they don't have enough cash
+def balance_check(request, form):
+    user = request.user
+    p = Profile.objects.filter(user=user)
+    cash = p[0].current_cash
+    
+    stock_ticker = form.cleaned_data['stock_ticker']
+    quantity = form.cleaned_data['num_of_shares']
+    net_price = get_stock_data(stock_ticker).get('price') * quantity
+    
+    return cash > net_price
+
+#function to change the user's current cash 
+def update_user_cash(user, bought, net_price):
+    p = Profile.objects.filter(user=user)
+    user_profile = p[0]
+    if bought:
+        user_profile.current_cash -= net_price
+    print(user_profile.current_cash)
+    user_profile.save()
+     
