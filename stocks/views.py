@@ -8,6 +8,9 @@ def home(request):
     return render(request, 'stocks/home.html')
 
 def portfolio(request):
+    p = get_portfolio(request.user)
+    context = {'form':form, 'title' : 'Portfolio'}
+    #logic if the form was filled out
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
         if form.is_valid():
@@ -18,9 +21,8 @@ def portfolio(request):
             update_portfolio(request, form)
             return redirect('stocks-portfolio')
     else:
+        #display blank form
         form = PurchaseForm()
-
-    context = {'form':form, 'title' : 'Portfolio'}
     return render(request, 'stocks/portfolio.html', context)
     
 

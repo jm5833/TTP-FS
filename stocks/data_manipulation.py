@@ -1,5 +1,5 @@
 from stocks.models import Portfolio, Transactions, Profile
-from stocks.data import get_stock_data
+from stocks.sdata import get_stock_data
 
 #function to add a transaction to the 
 #transactions database
@@ -63,4 +63,14 @@ def update_user_cash(user, bought, net_price):
     else:
         user_profile.current_cash += net_price
     user_profile.save()
-     
+
+#function to return all items in a users portfolio
+def get_portfolio(user):
+    p = Portfolio.objects.filter(user=user)
+    retval = []
+    for user_stock in p:
+        retval.append({ 'symbol' : user_stock.stock_ticker,
+                        'shares' : user_stock.num_of_shares,
+                        'worth' : user_stock.price_bought,
+                        })
+           

@@ -1,14 +1,32 @@
 {% extends 'stocks/base.html' %}
 {% block content %}
-    <h1> Portfolio </h1>
-    <div>
-        <h3> Portfolio will be here </h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3> Your Portfolio</h3>
+                <table>
+                    <tr>
+                        <th> Stock Name</th>
+                        <th> Number of Shares</th>
+                        <th> Net Worth </th>
+                    </tr>
+                    {% for stock in stocks %}
+                    <tr>
+                        <td> {{ stock.symbol }} </td>
+                        <td> {{ stock.shares }} </td>
+                        <td> {{ stock.worth }} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h3> Purchase Stocks </h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit"> Purchase Stock </button>
+                </form>
+            </div> 
+        </div>
     </div>
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit"> Purchase Stock </button>
-        </form>
-    </div> 
 {% endblock content %}
