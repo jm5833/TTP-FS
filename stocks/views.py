@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from stocks.forms import PurchaseForm
-from stocks.data_manipulation import save_post
+from stocks.data_manipulation import save_transaction, update_portfolio
 
 def home(request):
     return render(request, 'stocks/home.html')
@@ -11,7 +11,8 @@ def portfolio(request):
         form = PurchaseForm(request.POST)
         if form.is_valid():
             #create a transaction object
-            save_post(request, form)
+            save_transaction(request, form)
+            update_portfolio(request, form)
     else:
         form = PurchaseForm()
     context = {'form':form, 'title' : 'Portfolio'}
