@@ -16,13 +16,14 @@ def portfolio(request):
                 messages.error(request, 'Insufficent balance')
             save_transaction(request, form)
             update_portfolio(request, form)
+            messages.success(request, 'Stock purchased successfully')
     else:
         #display blank form
         form = PurchaseForm()
     user = request.user
     p = get_portfolio(user)
     context = { 'form':form, 
-                'title' : 'Portfolio', 
+                'title' : 'Portfolio',
                 'stocks' : p,
                 'portfolio_net' : get_portfolio_net(user)
               }
@@ -30,4 +31,6 @@ def portfolio(request):
     
 
 def transactions(request):
-    return render(request, 'stocks/transactions.html')
+    user_transactions = get_transactions(request.user)
+    context = { 'title' : 'Transactions', 'transactions' : user_transactions}
+    return render(request, 'stocks/transactions.html', context)

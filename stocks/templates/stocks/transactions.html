@@ -1,4 +1,28 @@
 {% extends 'stocks/base.html' %}
 {% block content %}
-    <h1> Transactions <h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1> Your Transactions </h1>
+                <table>
+                    <tr>
+                        <th> Stock </th>
+                        <th> Shares </th>
+                        <th> Bought/Sold </th>
+                        <th> Price per Stock </th>
+                        <th> Date </th>
+                    </tr>
+                    {% for stock in transactions %}
+                    <tr>
+                        <td> {{ stock.symbol }} </td>
+                        <td> {{ stock.shares }} </td>
+                        <td> {{ stock.bought }} </td>
+                        <td> @ ${{ stock.price }} </td>
+                        <td> on {{ stock.date }} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

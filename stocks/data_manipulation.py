@@ -101,3 +101,22 @@ def get_portfolio_net(user):
         current_price = get_stock_data(stock_ticker).get('price')
         profile_net += (current_price * shares)
     return round(profile_net, 2)
+
+#function to return a list of all transactions the 
+#given user has made
+def get_transactions(user):
+    t = Transactions.objects.filter(user=user)
+    user_transactions = []
+    for ut in t:
+        symbol = ut.stock_ticker
+        shares = ut.num_of_shares
+        bought = 'Bought' if ut.bought else 'Sold'
+        price = ut.price
+        date = ut.date
+        user_transactions.append({'symbol' : symbol,
+                                  'shares' : shares,
+                                  'bought' : bought,
+                                  'price' : price,
+                                  'date' : date,
+                                })
+    return user_transactions
