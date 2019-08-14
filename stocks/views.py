@@ -14,15 +14,18 @@ def portfolio(request):
         if form.is_valid():
             if not balance_check(request, form):
                 messages.error(request, 'Insufficent balance')
-                return redirect('stocks-portfolio')
             save_transaction(request, form)
             update_portfolio(request, form)
-            return redirect('stocks-portfolio')
     else:
         #display blank form
         form = PurchaseForm()
-    p = get_portfolio(request.user)
-    context = {'form':form, 'title' : 'Portfolio', 'stocks' : p}
+    user = request.user
+    p = get_portfolio(user)
+    context = { 'form':form, 
+                'title' : 'Portfolio', 
+                'stocks' : p,
+                'portfolio_net' : get_portfolio_net(user)
+              }
     return render(request, 'stocks/portfolio.html', context)
     
 

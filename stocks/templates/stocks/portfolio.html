@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <h3> Your Portfolio</h3>
+                <h3> Your Portfolio - ${{portfolio_net }}</h3>
                 <table>
                     <tr>
                         <th> Stock Name</th>
@@ -12,14 +12,17 @@
                     </tr>
                     {% for stock in stocks %}
                     <tr>
-                        <td>  {{ stock.symbol }} </td>
+                        <td style="color:{{stock.color}};">  {{ stock.symbol }} </td>
                         <td>  {{ stock.shares }} </td>
-                        <td> ${{ stock.worth }} </td>
+                        <td style="color:{{stock.color}};"> ${{ stock.current_price }} </td>
                     </tr>
                     {% endfor%}
                 </table>
             </div>
             <div class="col-md-4">
+                {% for message in messages %}
+                        {{ message }}
+                {% endfor %}
                 <h3> Purchase Stocks </h3>
                 <form method="post">
                     {% csrf_token %}

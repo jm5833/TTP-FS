@@ -69,9 +69,35 @@ def get_portfolio(user):
     p = Portfolio.objects.filter(user=user)
     retval = []
     for user_stock in p:
-        retval.append({ 'symbol' : user_stock.stock_ticker,
-                        'shares' : user_stock.num_of_shares,
-                        'worth' : user_stock.price_bought,
+        stock_ticker = user_stock.stock_ticker
+        num_of_shares = user_stock.num_of_shares
+        worth = user_stock.price_bought
+        
+        current_price = get_stock_data(stock_ticker).get('price')
+        color = ''
+        if worth > current_price:
+            color = 'red'
+        elif worth < current_price:
+            color = 'green'
+        else:
+            color = 'grey'
+        retval.append({ 'symbol' : stock_ticker,
+                        'shares' : num_of_shares,
+                        'current_price' : current_price,
+                        'color' : color
                         })
     return retval
-           
+
+#function that takes in a user and returns the net worth of their portfolio
+def get_portfolio_net(user):
+    profile_net = 0
+    p = Profile.objects.filter(user=user)
+    profile_net += p[0].current_cash
+    
+    p = Portfolio.objects.filter(user=user)
+    for stock in p:
+        stock_ticker = stock.stock_ticker
+        shares = stock.num_of_shares
+        current_price = get_stock_data(stock_ticker).get('price')
+        profile_net += (current_price * shares)
+    return round(profile_net, 2)
