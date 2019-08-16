@@ -5,7 +5,10 @@ from stocks.data_manipulation import *
 from django.contrib import messages
 
 def home(request):
-    return render(request, 'stocks/home.html')
+    if request.is_authenticated:
+        return redirect('stocks-portfolio')
+    else:
+        return redirect('login')
 
 def portfolio(request):
     #redirect user to login if they're not logged in
