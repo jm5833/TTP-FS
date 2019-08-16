@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '6e@dauuzmkk+x)(^@j%=#hhzlr)e0qtnj2o^18yhe15%ftgu(f'
-
+    
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -122,3 +122,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
+
+#custom settings
+
+AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = ['users.Emailbackend.Emailbackend']
+
+EMAIL_BACKEND = 'users.Emailbackend'

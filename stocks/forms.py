@@ -1,6 +1,7 @@
 from django import forms
-from stocks.models import Profile, Portfolio, Transactions
+from stocks.models import Portfolio, Transactions
 from stocks.sdata import is_valid_symbol
+from users.models import User
 
 #custom django form to purchase stocks
 class PurchaseForm(forms.ModelForm):
