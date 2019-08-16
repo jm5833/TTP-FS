@@ -1,9 +1,21 @@
 {% extends 'stocks/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-     <form method='POST'>
-        {% csrf_token %}
-        {{ form | crispy }}
-        <button type='submit' class="btn btn-primary"> Sign up </button>
-    </form>
+    {% for message in messages %}
+        <div class="alert alert-dismissable alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class="mb-0"> {{message}} </p>
+        </div>
+    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                 <form method='POST' class="form-group">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <button type='submit' class="btn btn-primary"> Sign up </button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

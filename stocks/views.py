@@ -38,7 +38,7 @@ def portfolio(request):
 
 def transactions(request):
     if not request.user.is_authenticated:
-        messages.warning('You need to be logged in to view this page')
+        messages.warning(request, 'You need to be logged in to view this page')
         return redirect('login')
     #get a list of the transactions a user has made 
     user_transactions = get_transactions(request.user)
