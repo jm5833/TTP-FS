@@ -8,6 +8,10 @@ def home(request):
     return render(request, 'stocks/home.html')
 
 def portfolio(request):
+    #redirect user to login if they're not logged in
+    if not request.user.is_authenticated:
+        messages.warning('You need to login to view this page')
+        return redirect('login')
     #return render(request, 'stocks/home.html')
     #logic if the form was filled out
     if request.method == 'POST':
@@ -30,6 +34,10 @@ def portfolio(request):
     return render(request, 'stocks/portfolio.html', context)
 
 def transactions(request):
+    if not request.user.is_authenticated:
+        messages.warning('You need to be logged in to view this page')
+        return redirect('login')
+    #get a list of the transactions a user has made 
     user_transactions = get_transactions(request.user)
     context = { 'title' : 'Transactions', 'transactions' : user_transactions}
     return render(request, 'stocks/transactions.html', context)

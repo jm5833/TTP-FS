@@ -5,6 +5,9 @@ from django.contrib import messages
 from users.forms import RegistrationForm, LoginForm
 
 def register(request):
+    #redirect the user out if they're logged in
+    if request.user.is_authenticated:
+        return redirect('stocks-portfolio')
     #check if the user submitted the post
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -20,8 +23,10 @@ def register(request):
     context = {'form' : form, 'title': 'Register' }
     return render(request, 'users/register.html', context)
     
-
+#view to log the user into their account 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('stocks-portfolio')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
