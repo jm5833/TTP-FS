@@ -111,7 +111,7 @@ def get_transactions(user):
     t = Transactions.objects.filter(user=user)
     user_transactions = []
     for ut in t:
-        symbol = ut.stock_ticker
+        symbol = ut.stock_ticker.upper()
         shares = ut.num_of_shares
         bought = 'Bought' if ut.bought else 'Sold'
         price = ut.price

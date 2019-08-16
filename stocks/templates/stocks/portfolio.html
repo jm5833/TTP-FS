@@ -4,14 +4,14 @@
         <div class="row">
             <div class="col-md-8">
                 <h3> Your Portfolio - ${{portfolio_net }}</h3>
-                <table>
+                <table class="table table-hover">
                     <tr>
                         <th> Stock Name</th>
                         <th> Number of Shares</th>
                         <th> Price per Stock </th>
                     </tr>
                     {% for stock in stocks %}
-                    <tr>
+                    <tr class="table-active">
                         <td style="color:{{stock.color}};">  {{ stock.symbol }} </td>
                         <td>  {{ stock.shares }} </td>
                         <td style="color:{{stock.color}};"> ${{ stock.current_price }} </td>
@@ -21,13 +21,17 @@
             </div>
             <div class="col-md-4">
                 {% for message in messages %}
-                        {{ message }}
+                    <div class="alert alert-dismissible alert-warning">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h4 class="alert-heading"> Hey there! </h4>
+                        <p class="mb-0">{{ message }}</p>
+                    </div>
                 {% endfor %}
                 <h3> Purchase Stocks </h3>
-                <form method="post">
+                <form method="post" class="form-group">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit"> Purchase Stock </button>
+                    <button type="submit" class="btn btn-primary"> Purchase Stock </button>
                 </form>
             </div> 
         </div>
