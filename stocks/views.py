@@ -8,8 +8,7 @@ def home(request):
     return render(request, 'stocks/home.html')
 
 def portfolio(request):
-    return render(request, 'stocks/home.html')
-    '''
+    #return render(request, 'stocks/home.html')
     #logic if the form was filled out
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
@@ -19,9 +18,8 @@ def portfolio(request):
             save_transaction(request, form)
             update_portfolio(request, form)
             messages.success(request, 'Stock purchased successfully')
-    else:
-        #display blank form
-        form = PurchaseForm()
+    #display blank form
+    form = PurchaseForm()
     user = request.user
     p = get_portfolio(user)
     context = { 'form':form, 
@@ -30,12 +28,8 @@ def portfolio(request):
                 'portfolio_net' : get_portfolio_net(user)
               }
     return render(request, 'stocks/portfolio.html', context)
-    '''
 
 def transactions(request):
-    return render(request, 'stocks/home.html')
-    '''
     user_transactions = get_transactions(request.user)
     context = { 'title' : 'Transactions', 'transactions' : user_transactions}
     return render(request, 'stocks/transactions.html', context)
-    '''

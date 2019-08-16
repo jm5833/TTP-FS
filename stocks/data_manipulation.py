@@ -1,9 +1,7 @@
 from stocks.models import Transactions, Portfolio
 from users.models import User
 from stocks.sdata import get_stock_data
-'''
-from stocks.models import Portfolio, Transactions, Profile
-from stocks.sdata import get_stock_data
+from decimal import Decimal
 
 #function to add a transaction to the 
 #transactions database
@@ -32,7 +30,7 @@ def update_portfolio(request, form):
         p = user_stock[0]
         p.num_of_shares += num_of_shares
         p.save()
-    update_user_cash(user, True, num_of_shares * price)
+    update_user_cash(user.pk, True, num_of_shares * price)
             
 #function to add an entry into the portfolio table
 def add_portfolio(user, stock_ticker, num_of_shares, price):
@@ -48,11 +46,9 @@ def add_portfolio(user, stock_ticker, num_of_shares, price):
 #returns True if the user has enough cash
 #returns False if they don't have enough cash
 def balance_check(request, form):
-    user = request.user
-    u = User.objects.filter(user=user)
+    user_pk = request.user.pk
+    u = User.objects.filter(pk=user_pk)
     cash = u[0].current_cash
-    p = Profile.objects.filter(user=user)
-    cash = p[0].current_cash
     
     stock_ticker = form.cleaned_data['stock_ticker'].upper()
     quantity = form.cleaned_data['num_of_shares']
@@ -61,16 +57,15 @@ def balance_check(request, form):
     return cash > net_price
 
 #function to change the user's current cash 
-def update_user_cash(user, bought, net_price):
-    u = User.objects.filter(user=user)
-    user_profile = u[0]
-    p = Profile.objects.filter(user=user)
-    user_profile = p[0]
+def update_user_cash(user_pk, bought, net_price):
+    u = User.objects.filter(pk=user_pk)
+    user = u[0]
     if bought:
-        user_profile.current_cash -= net_price
+        user.current_cash -= net_price
     else:
-        user_profile.current_cash += net_price
-    user_profile.save()
+        user.current_cash += net_price
+    print(user.current_cash)
+    user.save()
 
 #function to return all items in a users portfolio
 def get_portfolio(user):
@@ -98,12 +93,10 @@ def get_portfolio(user):
 
 #function that takes in a user and returns the net worth of their portfolio
 def get_portfolio_net(user):
-    profile_net = 0
-    u = User.objects.filter(user=user)
-    profile_net += u[0].current_cash
-    p = Profile.objects.filter(user=user)
-    profile_net += p[0].current_cash
-    
+    profile_net = float(0)
+    u = User.objects.filter(pk=user.pk)
+    profile_net += float(u[0].current_cash)
+
     p = Portfolio.objects.filter(user=user)
     for stock in p:
         stock_ticker = stock.stock_ticker
@@ -130,4 +123,4 @@ def get_transactions(user):
                                   'date' : date,
                                 })
     return user_transactions
-'''
+

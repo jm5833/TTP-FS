@@ -33,9 +33,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    current_cash = models.DecimalField(max_digits=15,
-                                       decimal_places=5,
-                                       default=5000.00)
+    current_cash = models.FloatField(default=5000.00)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
