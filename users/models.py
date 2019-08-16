@@ -14,7 +14,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(using=self._adb)
+        user.save()
         return user
 
     #function to create a user with no priviledges
