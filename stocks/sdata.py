@@ -26,4 +26,5 @@ def is_valid_symbol(symbol):
     PARAMS={'symbols' : symbol}
     r = requests.get(url=URL, params=PARAMS)
     data = r.json()
+    print(len(data) > 0)
     return len(data) > 0

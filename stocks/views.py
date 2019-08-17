@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from stocks.forms import PurchaseForm
 from stocks.data_manipulation import *
 from django.contrib import messages
+from stocks.sdata import is_valid_symbol
 
 def home(request):
     if request.user.is_authenticated:
@@ -20,11 +21,14 @@ def portfolio(request):
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
         if form.is_valid():
-            if not balance_check(request, form):
+            if not is_valid_symbol(form.cleaned_data['stock_ticker']):
+                messages.error(request, 'Thats not a valid stock ticker!')
+            elif not balance_check(request, form):
                 messages.error(request, 'Insufficent balance')
-            save_transaction(request, form)
-            update_portfolio(request, form)
-            messages.success(request, 'Stock purchased successfully')
+            else:    
+                save_transaction(request, form)
+                update_portfolio(request, form)
+                messages.success(request, 'Stock purchased successfully')
     #display blank form
     current_cash = get_current_cash(request.user.pk)
     form = PurchaseForm()

@@ -47,7 +47,6 @@ def add_portfolio(user, stock_ticker, num_of_shares, price):
 #returns False if they don't have enough cash
 def balance_check(request, form):
     cash = get_current_cash(request.user.pk)
-    
     stock_ticker = form.cleaned_data['stock_ticker'].upper()
     quantity = form.cleaned_data['num_of_shares']
     net_price = get_stock_data(stock_ticker).get('price') * quantity
@@ -62,7 +61,6 @@ def update_user_cash(user_pk, bought, net_price):
         user.current_cash -= net_price
     else:
         user.current_cash += net_price
-    print(user.current_cash)
     user.save()
 
 #function to return all items in a users portfolio
