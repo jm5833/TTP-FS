@@ -29,6 +29,7 @@
                     </div>
                 {% endfor %}
                 <h3> Purchase Stocks </h3>
+                <h3> Onhand cash - ${{current_cash}}</h3>
                 <form method="post" class="form-group">
                     {% csrf_token %}
                     {{ form | crispy }}

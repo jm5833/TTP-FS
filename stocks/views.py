@@ -5,7 +5,7 @@ from stocks.data_manipulation import *
 from django.contrib import messages
 
 def home(request):
-    if request.is_authenticated:
+    if request.user.is_authenticated:
         return redirect('stocks-portfolio')
     else:
         return redirect('login')
@@ -13,7 +13,7 @@ def home(request):
 def portfolio(request):
     #redirect user to login if they're not logged in
     if not request.user.is_authenticated:
-        messages.warning('You need to login to view this page')
+        messages.warning(request, 'You need to login to view this page')
         return redirect('login')
     #return render(request, 'stocks/home.html')
     #logic if the form was filled out
@@ -26,13 +26,15 @@ def portfolio(request):
             update_portfolio(request, form)
             messages.success(request, 'Stock purchased successfully')
     #display blank form
+    current_cash = get_current_cash(request.user.pk)
     form = PurchaseForm()
     user = request.user
     p = get_portfolio(user)
     context = { 'form':form, 
                 'title' : 'Portfolio',
                 'stocks' : p,
-                'portfolio_net' : get_portfolio_net(user)
+                'portfolio_net' : get_portfolio_net(user),
+                'current_cash' : current_cash
               }
     return render(request, 'stocks/portfolio.html', context)
 

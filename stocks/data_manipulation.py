@@ -46,9 +46,7 @@ def add_portfolio(user, stock_ticker, num_of_shares, price):
 #returns True if the user has enough cash
 #returns False if they don't have enough cash
 def balance_check(request, form):
-    user_pk = request.user.pk
-    u = User.objects.filter(pk=user_pk)
-    cash = u[0].current_cash
+    cash = get_current_cash(request.user.pk)
     
     stock_ticker = form.cleaned_data['stock_ticker'].upper()
     quantity = form.cleaned_data['num_of_shares']
@@ -124,3 +122,6 @@ def get_transactions(user):
                                 })
     return user_transactions
 
+#function to return a user's current balance
+def get_current_cash(user_pk):
+    return User.objects.filter(pk=user_pk)[0].current_cash
